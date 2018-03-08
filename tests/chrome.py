@@ -29,17 +29,23 @@ import selenium
 @patch('selenium.webdriver.Chrome')
 class TestChrome(unittest.TestCase):
 
-    def test__init__withoutoptions_initschrome(self, chrome):
-        Chrome()
-        chrome.assert_called_once()
+    def test__init__(self, chrome):
+        chrm = Chrome()
+        self.assertIsNotNone(chrm._options)
 
-    @patch('selenium.webdriver.chrome.options.Options')
-    def test__init__withoptions_initsoptions(self, chrome, options):
-        Chrome(options={})
-        options.assert_called_once()
+    def test__init__withoptions(self, chrome):
+        chrm = Chrome(options={})
+        self.assertEqual(chrm.options, {})
+        self.assertIsNotNone(chrm._options)
 
-    def test_withcontext_cleanschrome(self, chrome):
-        with Chrome() as _:
+    def test_withcontext_enter(self, chrome):
+        with Chrome() as chrm:
+            self.assertIsNone(chrm.driver)
+            pass
+
+    def test_withcontext_cleansafterget(self, chrome):
+        with Chrome() as chrome_context:
+            chrome_context.get('')
             pass
 
         chrome.return_value.stop_client.assert_called_once()

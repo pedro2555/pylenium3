@@ -27,19 +27,33 @@ from selenium.common.exceptions import WebDriverException
 class Chrome(object):
 
     def __init__(self, **kwargs):
-        try:
-            if 'options' in kwargs:
-                opts = Options()
-                self.driver = webdriver.Chrome(options=opts)
-            else:
-                self.driver = webdriver.Chrome()
-        except WebDriverException as crap:
-            raise FileNotFoundError(str(crap))
+        self.driver = None
+        self.options = kwargs['options'] if 'options' in kwargs else None
+        self._options = Options()
+
+    def _lazyloadchrome(self):
+        if self.driver is None:
+            try:
+                self.driver = webdriver.Chrome(options=self._options)
+            except WebDriverException as crap:
+                raise FileNotFoundError(str(crap))
 
     def __enter__(self):
         return self
 
     def __exit__(self, *args):
+        self._lazyloadchrome()
+
         self.driver.stop_client()
         self.driver.close()
         self.driver.quit()
+
+    def get(self, url):
+        self._lazyloadchrome()
+
+        self.driver.get(url)
+
+    def __getitem__(self, id):
+        self._lazyloadchrome()
+
+        return self.driver.find_element_by_id(id)
