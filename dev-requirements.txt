@@ -1,3 +1,4 @@
 setuptools
+mock
 setuptools-lint
 flake8

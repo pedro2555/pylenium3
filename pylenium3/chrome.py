@@ -19,8 +19,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pylenium3.  If not, see <http://www.gnu.org/licenses/>.
 """
-import unittest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import WebDriverException
 
 
-class TestPylenium3(unittest.TestCase):
-    pass
+class Chrome(object):
+    def __init__(self, **kwargs):
+        try:
+            if 'options' in kwargs:
+                opts = Options()
+                self.driver = webdriver.Chrome(options=opts)
+            else:
+                self.driver = webdriver.Chrome()
+        except WebDriverException as crap:
+            raise FileNotFoundError(str(crap))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.driver.stop_client()
+        self.driver.close()
+        self.driver.quit()

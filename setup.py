@@ -21,11 +21,11 @@ along with Pylenium3.  If not, see <http://www.gnu.org/licenses/>.
 """
 from setuptools import setup, find_packages
 
-requirements = []
+requirements = ['selenium']
 
 setup_requirements = []
 
-test_requirements = ['setuptools', 'setuptools-lint', 'flake8']
+test_requirements = ['setuptools', 'mock', 'setuptools-lint', 'flake8']
 
 setup(
     author="Pedro Rodrigues",
