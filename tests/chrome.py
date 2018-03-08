@@ -25,6 +25,7 @@ from mock import patch
 from pylenium3.chrome import Chrome
 import selenium
 
+
 @patch('selenium.webdriver.Chrome')
 class TestChrome(unittest.TestCase):
 
@@ -38,7 +39,7 @@ class TestChrome(unittest.TestCase):
         options.assert_called_once()
 
     def test_withcontext_cleanschrome(self, chrome):
-        with Chrome() as c:
+        with Chrome() as _:
             pass
 
         chrome.return_value.stop_client.assert_called_once()
