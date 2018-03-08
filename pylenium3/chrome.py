@@ -42,18 +42,44 @@ class Chrome(object):
         return self
 
     def __exit__(self, *args):
-        self._lazyloadchrome()
-
-        self.driver.stop_client()
-        self.driver.close()
-        self.driver.quit()
+        if self.driver is not None:
+            self.driver.stop_client()
+            self.driver.close()
+            self.driver.quit()
 
     def get(self, url):
         self._lazyloadchrome()
 
         self.driver.get(url)
 
-    def __getitem__(self, id):
+    def __getitem__(self, selector):
+
+        if type(selector) is str:
+            # assume it's an id
+            query = selector
+            selector = 'id'
+
+        if type(selector) is slice:
+            query = selector.stop
+            selector = selector.start
+
         self._lazyloadchrome()
 
-        return self.driver.find_element_by_id(id)
+        if selector == 'id':
+            return self.driver.find_element_by_id(query)
+        elif selector == 'name':
+            return self.driver.find_elements_by_name(query)
+        elif selector == 'xpath':
+            return self.driver.find_elements_by_xpath(query)
+        elif selector == 'link':
+            return self.driver.find_elements_by_link_text(query)
+        elif selector == 'partiallink':
+            return self.driver.find_elements_by_partial_link_text(query)
+        elif selector == 'tag':
+            return self.driver.find_elements_by_tag_name(query)
+        elif selector == 'class':
+            return self.driver.find_elements_by_class_name(query)
+        elif selector == 'css':
+            return self.driver.find_elements_by_css_selector(query)
+
+        raise LookupError('Unknown selenium selector %s' % selector)
