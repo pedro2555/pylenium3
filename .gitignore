@@ -41,3 +41,6 @@ pip-delete-this-directory.txt
 
 # stupid package stuff
 selenium/
+
+# tox
+.tox

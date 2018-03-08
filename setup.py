@@ -25,7 +25,7 @@ requirements = ['selenium']
 
 setup_requirements = []
 
-test_requirements = ['setuptools', 'mock', 'setuptools-lint', 'flake8']
+test_requirements = ['setuptools', 'mock']
 
 setup(
     author="Pedro Rodrigues",

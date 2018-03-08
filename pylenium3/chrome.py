@@ -25,6 +25,7 @@ from selenium.common.exceptions import WebDriverException
 
 
 class Chrome(object):
+
     def __init__(self, **kwargs):
         try:
             if 'options' in kwargs:
