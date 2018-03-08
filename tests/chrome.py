@@ -20,8 +20,7 @@ You should have received a copy of the GNU General Public License
 along with Pylenium3.  If not, see <http://www.gnu.org/licenses/>.
 """
 import unittest
-from mock import Mock, MagicMock, patch
-from contextlib import suppress
+from mock import patch
 
 from pylenium3.chrome import Chrome
 import selenium
