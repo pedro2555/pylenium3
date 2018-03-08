@@ -56,12 +56,12 @@ class Chrome(object):
 
         if type(selector) is str:
             # assume it's an id
-            query = selector
+            query = selector.lower().strip()
             selector = 'id'
 
         if type(selector) is slice:
-            query = selector.stop
-            selector = selector.start
+            query = selector.stop.lower().strip()
+            selector = selector.start.lower().strip()
 
         self._lazyloadchrome()
 
