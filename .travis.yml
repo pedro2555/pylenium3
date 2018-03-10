@@ -3,7 +3,8 @@ language: python
 cache: pip
 before_script:
   - LATEST_CHROME_VERSION="`wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE`"
-  - wget https://chromedriver.storage.googleapis.com/$LATEST_CHROME_VERSION/chromedriver_linux32.zip -O $TRAVIS_BUILD_DIR/chromedriver
+  - wget https://chromedriver.storage.googleapis.com/$LATEST_CHROME_VERSION/chromedriver_linux32.zip -O $TRAVIS_BUILD_DIR/chromedriver_linux32.zip
+  - unzip chromedriver_linux32.zip
 script: tox
 python:
   - 3.4
