@@ -23,14 +23,12 @@ import unittest
 from mock import patch
 
 from pylenium3.chrome import Chrome
-from tests import CHROMEDRIVER_PATH
 
 
 class TestChrome(unittest.TestCase):
 
     def test_launch_headless(self):
         options = {
-            'driver': CHROMEDRIVER_PATH,
             'headless': True
         }
         with Chrome(options=options) as d:

@@ -1,5 +1,8 @@
+dist: trusty
 sudo: false
 language: python
+addons:
+  chrome: stable
 cache: pip
 script: tox
 python:
