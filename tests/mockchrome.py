@@ -27,16 +27,11 @@ import selenium
 
 
 @patch('selenium.webdriver.Chrome')
-class TestChrome(unittest.TestCase):
+class TestMockChrome(unittest.TestCase):
 
     def test__init__(self, chrome):
-        chrm = Chrome()
-        self.assertIsNotNone(chrm._options)
-
-    def test__init__withoptions(self, chrome):
-        chrm = Chrome(options={})
-        self.assertEqual(chrm.options, {})
-        self.assertIsNotNone(chrm._options)
+        c = Chrome()
+        self.assertIsNotNone(c._options)
 
     def test_withcontext_enter(self, chrome):
         with Chrome() as chrm:

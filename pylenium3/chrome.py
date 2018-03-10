@@ -28,15 +28,23 @@ class Chrome(object):
 
     def __init__(self, **kwargs):
         self.driver = None
-        self.options = kwargs['options'] if 'options' in kwargs else None
+        self.options = kwargs['options'] if 'options' in kwargs else []
         self._options = Options()
 
     def _lazyloadchrome(self):
-        if self.driver is None:
-            try:
+        try:
+            self._parsechromeoptions()
+            if 'driver' in self.options:
+                self.driver = webdriver.Chrome(self.options['driver'],
+                                               options=self._options)
+            else:
                 self.driver = webdriver.Chrome(options=self._options)
-            except WebDriverException as crap:
-                raise FileNotFoundError(str(crap))
+        except WebDriverException as crap:
+            raise FileNotFoundError(str(crap))
+
+    def _parsechromeoptions(self):
+        if 'headless' in self.options:
+            self._options.add_argument('--headless')
 
     def __enter__(self):
         return self
