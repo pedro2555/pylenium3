@@ -1,12 +1,13 @@
-dist: trusty
 sudo: false
 language: python
-addons:
-  chrome: stable
 cache: pip
+before_script:
+  - LATEST_CHROME_VERSION="`wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE`"
+  - wget https://chromedriver.storage.googleapis.com/$LATEST_CHROME_VERSION/chromedriver_linux32.zip -O $TRAVIS_BUILD_DIR/chromedriver
 script: tox
 python:
   - 3.4
   - 3.5
   - 3.6
 install: travis_retry pip install tox-travis
+https://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip
